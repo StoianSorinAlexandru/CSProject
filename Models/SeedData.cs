@@ -24,56 +24,93 @@ namespace miniProiect2.Data
                 }
 
                 // Seed Products
-                context.Products.AddRange(
+                var products = new[]
+                {
                     new Product { Name = "Product A", Price = 10.5f },
                     new Product { Name = "Product B", Price = 15.75f },
                     new Product { Name = "Product C", Price = 7.30f }
-                );
+                };
+                context.Products.AddRange(products);
                 context.SaveChanges();
 
                 // Seed Partners
-                context.Partners.AddRange(
+                var partners = new[]
+                {
                     new Partner { Name = "Partner A", CUI = "123456", Address = "123 Street A" },
                     new Partner { Name = "Partner B", CUI = "654321", Address = "456 Street B" }
-                );
+                };
+                context.Partners.AddRange(partners);
                 context.SaveChanges();
 
                 // Seed Gestions
-                context.Gestions.AddRange(
+                var gestions = new[]
+                {
                     new Gestion { Name = "Gestion A" },
                     new Gestion { Name = "Gestion B" }
-                );
-                // Save changes to ensure EntryIds are generated
+                };
+                context.Gestions.AddRange(gestions);
                 context.SaveChanges();
 
-                // Seed Entries
-                context.Entries.AddRange(
-                    new Entry { Date = DateTime.Parse("2023-01-01"), PartnerId = 1, GestionId = 1 },
-                    new Entry { Date = DateTime.Parse("2023-02-01"), PartnerId = 2, GestionId = 2 }
-                );
+                // Seed Entries with navigation properties
+                var entries = new[]
+                {
+                    new Entry
+                    {
+                        Date = DateTime.Parse("2023-01-01"),
+                        Partner = partners[0], // Assign Partner object
+                        Gestion = gestions[0]  // Assign Gestion object
+                    },
+                    new Entry
+                    {
+                        Date = DateTime.Parse("2023-02-01"),
+                        Partner = partners[1], // Assign Partner object
+                        Gestion = gestions[1]  // Assign Gestion object
+                    }
+                };
+                context.Entries.AddRange(entries);
+                context.SaveChanges();
 
-                // Save changes to ensure EntryIds are generated
+                var detailedEntries = new[]
+                {
+                    new DetailedEntry
+                    {
+                        Entry = context.Entries.AsNoTracking().First(e => e.Id == entries[0].Id),
+                        Product = context.Products.AsNoTracking().First(p => p.Id == products[0].Id),
+                        Quantity = 10
+                    },
+                    new DetailedEntry
+                    {
+                        Entry = context.Entries.AsNoTracking().First(e => e.Id == entries[0].Id),
+                        Product = context.Products.AsNoTracking().First(p => p.Id == products[1].Id),
+                        Quantity = 5
+                    },
+                    new DetailedEntry
+                    {
+                        Entry = context.Entries.AsNoTracking().First(e => e.Id == entries[1].Id),
+                        Product = context.Products.AsNoTracking().First(p => p.Id == products[2].Id),
+                        Quantity = 7
+                    }
+                };
+                context.DetailedEntries.AddRange(detailedEntries);
                 context.SaveChanges();
 
                 // Seed Detailed Entries
-                context.DetailedEntries.AddRange(
-                    new DetailedEntry { EntryId = 1, ProductId = 1, Quantity = 10, Price = 10.5f },
-                    new DetailedEntry { EntryId = 1, ProductId = 2, Quantity = 5, Price = 15.75f },
-                    new DetailedEntry { EntryId = 2, ProductId = 3, Quantity = 7, Price = 7.30f }
-                );
-                context.SaveChanges();
+
+
 
                 // Seed Exits
-                context.Exits.AddRange(
-                    new Exit { Date = DateTime.Parse("2023-03-01"), GestionId = 3 },
-                    new Exit { Date = DateTime.Parse("2023-04-01"), GestionId = 4 }
-                );
+                var exits = new[]
+                {
+                    new Exit { Date = DateTime.Parse("2023-03-01"), Gestion = gestions[0] },
+                    new Exit { Date = DateTime.Parse("2023-04-01"), Gestion = gestions[1] }
+                };
+                context.Exits.AddRange(exits);
                 context.SaveChanges();
 
                 // Seed Detailed Exits
                 context.DetailedExits.AddRange(
-                    new DetailedExit { ExitId = 1, ProductId = 1 },
-                    new DetailedExit { ExitId = 2, ProductId = 3 }
+                    new DetailedExit { Exit = exits[0], Product = products[0] },
+                    new DetailedExit { Exit = exits[1], Product = products[2] }
                 );
 
                 // Save changes again

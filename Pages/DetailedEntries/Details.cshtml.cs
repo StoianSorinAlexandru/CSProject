@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using miniProiect2.Data;
 using miniProiect2.Models;
 
-namespace miniProiect2.Pages.Entries
+namespace miniProiect2.Pages.DetailedEntries
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace miniProiect2.Pages.Entries
             _context = context;
         }
 
-        public Entry Entry { get; set; } = default!;
+        public DetailedEntry DetailedEntry { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,14 +28,11 @@ namespace miniProiect2.Pages.Entries
                 return NotFound();
             }
 
-            var entry = await _context.Entries
-                .Include(e => e.Gestion)
-                .Include(e => e.Partner)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var detailedentry = await _context.DetailedEntries.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (entry is not null)
+            if (detailedentry is not null)
             {
-                Entry = entry;
+                DetailedEntry = detailedentry;
 
                 return Page();
             }

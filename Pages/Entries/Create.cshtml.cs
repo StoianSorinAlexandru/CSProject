@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using miniProiect2.Data;
 using miniProiect2.Models;
 
@@ -21,8 +23,8 @@ namespace miniProiect2.Pages.Entries
 
         public IActionResult OnGet()
         {
-        ViewData["GestionId"] = new SelectList(_context.Set<Gestion>(), "Id", "Id");
-        ViewData["PartnerId"] = new SelectList(_context.Set<Partner>(), "Id", "Id");
+            ViewData["GestionId"] = new SelectList(_context.Set<Gestion>(), "Id", "Name");
+            ViewData["PartnerId"] = new SelectList(_context.Set<Partner>(), "Id", "Name");
             return Page();
         }
 
@@ -35,6 +37,25 @@ namespace miniProiect2.Pages.Entries
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            var partnerQuery = from m in _context.Partners
+                               where m.Id == Entry.PartnerId
+                               select m;
+            var partnerResult = await partnerQuery.FirstOrDefaultAsync();
+            if (partnerResult != null)
+            {
+                Entry.Partner = partnerResult;
+                Entry.PartnerId = partnerResult.Id;
+            }
+            var gestionQuery = from m in _context.Gestions
+                               where m.Id == Entry.GestionId
+                               select m;
+            var gestionResult = await gestionQuery.FirstOrDefaultAsync();
+            if (gestionResult != null)
+            {
+                Entry.Gestion = gestionResult;
+                Entry.GestionId = gestionResult.Id;
             }
 
             _context.Entries.Add(Entry);

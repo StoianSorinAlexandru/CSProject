@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using miniProiect2.Data;
 using miniProiect2.Models;
 
-namespace miniProiect2.Pages.Entries
+namespace miniProiect2.Pages.DetailedEntries
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace miniProiect2.Pages.Entries
         }
 
         [BindProperty]
-        public Entry Entry { get; set; } = default!;
+        public DetailedEntry DetailedEntry { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,17 +30,14 @@ namespace miniProiect2.Pages.Entries
                 return NotFound();
             }
 
-            var entry = await _context.Entries
-                .Include(e => e.Gestion)
-                .Include(e => e.Partner)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (entry == null)
+            var detailedentry =  await _context.DetailedEntries.FirstOrDefaultAsync(m => m.Id == id);
+            if (detailedentry == null)
             {
                 return NotFound();
             }
-            Entry = entry;
-            ViewData["GestionId"] = new SelectList(_context.Set<Gestion>(), "Id", "Name");
-            ViewData["PartnerId"] = new SelectList(_context.Set<Partner>(), "Id", "Name");
+            DetailedEntry = detailedentry;
+           ViewData["Id"] = new SelectList(_context.Entries, "Id", "Id");
+           ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
             return Page();
         }
 
@@ -53,7 +50,7 @@ namespace miniProiect2.Pages.Entries
                 return Page();
             }
 
-            _context.Attach(Entry).State = EntityState.Modified;
+            _context.Attach(DetailedEntry).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +58,7 @@ namespace miniProiect2.Pages.Entries
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EntryExists(Entry.Id))
+                if (!DetailedEntryExists(DetailedEntry.Id))
                 {
                     return NotFound();
                 }
@@ -74,9 +71,9 @@ namespace miniProiect2.Pages.Entries
             return RedirectToPage("./Index");
         }
 
-        private bool EntryExists(int id)
+        private bool DetailedEntryExists(int id)
         {
-            return _context.Entries.Any(e => e.Id == id);
+            return _context.DetailedEntries.Any(e => e.Id == id);
         }
     }
 }

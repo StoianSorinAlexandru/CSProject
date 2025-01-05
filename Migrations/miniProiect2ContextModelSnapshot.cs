@@ -27,12 +27,6 @@ namespace miniProiect2.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("EntryId")
-                        .HasColumnType("int");
-
-                    b.Property<float?>("Price")
-                        .HasColumnType("real");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -49,9 +43,6 @@ namespace miniProiect2.Migrations
             modelBuilder.Entity("miniProiect2.Models.DetailedExit", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ExitId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
