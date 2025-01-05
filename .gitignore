@@ -1,0 +1,26 @@
+# Ignore the .vs folder (Visual Studio settings)
+.vs/
+
+# Ignore build outputs
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.suo
+*.userosscache
+*.userprefs
+
+# Ignore logs, temporary files, and OS-generated files
+*.log
+*.tmp
+*.swp
+*.DS_Store
+Thumbs.db
+
+# Ignore publish and deploy files
+publish/
+wwwroot/
+
+# Ignore configuration files
+appsettings*.json
