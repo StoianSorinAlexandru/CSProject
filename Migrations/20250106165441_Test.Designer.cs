@@ -12,8 +12,8 @@ using miniProiect2.Data;
 namespace miniProiect2.Migrations
 {
     [DbContext(typeof(miniProiect2Context))]
-    [Migration("20250105163802_initial migration")]
-    partial class initialmigration
+    [Migration("20250106165441_Test")]
+    partial class Test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,12 @@ namespace miniProiect2.Migrations
             modelBuilder.Entity("miniProiect2.Models.DetailedEntry", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EntryId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -37,6 +43,8 @@ namespace miniProiect2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EntryId");
 
                     b.HasIndex("ProductId");
 
@@ -171,7 +179,7 @@ namespace miniProiect2.Migrations
                 {
                     b.HasOne("miniProiect2.Models.Entry", "Entry")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("EntryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

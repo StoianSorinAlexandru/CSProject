@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace miniProiect2.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigration : Migration
+    public partial class Test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -125,7 +125,9 @@ namespace miniProiect2.Migrations
                 name: "DetailedEntries",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EntryId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false)
                 },
@@ -133,8 +135,8 @@ namespace miniProiect2.Migrations
                 {
                     table.PrimaryKey("PK_DetailedEntries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DetailedEntries_Entries_Id",
-                        column: x => x.Id,
+                        name: "FK_DetailedEntries_Entries_EntryId",
+                        column: x => x.EntryId,
                         principalTable: "Entries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -145,6 +147,11 @@ namespace miniProiect2.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetailedEntries_EntryId",
+                table: "DetailedEntries",
+                column: "EntryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetailedEntries_ProductId",

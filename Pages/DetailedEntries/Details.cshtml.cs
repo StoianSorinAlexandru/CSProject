@@ -30,6 +30,7 @@ namespace miniProiect2.Pages.DetailedEntries
 
             var detailedentry = await _context.DetailedEntries.FirstOrDefaultAsync(m => m.Id == id);
 
+
             if (detailedentry is not null)
             {
                 DetailedEntry = detailedentry;

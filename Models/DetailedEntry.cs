@@ -6,7 +6,8 @@ namespace miniProiect2.Models
     public class DetailedEntry
     {
         public int Id { get; set; }
-        [ForeignKey("Id")]
+        public int EntryId { get; set; }   
+        [ForeignKey("EntryId")]
         public virtual Entry? Entry { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]

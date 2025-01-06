@@ -74,25 +74,26 @@ namespace miniProiect2.Data
                 {
                     new DetailedEntry
                     {
-                        Entry = context.Entries.AsNoTracking().First(e => e.Id == entries[0].Id),
-                        Product = context.Products.AsNoTracking().First(p => p.Id == products[0].Id),
+                        Entry = entries[0], // Use the already tracked entity
+                        Product = products[0], // Use the already tracked entity
                         Quantity = 10
                     },
                     new DetailedEntry
                     {
-                        Entry = context.Entries.AsNoTracking().First(e => e.Id == entries[0].Id),
-                        Product = context.Products.AsNoTracking().First(p => p.Id == products[1].Id),
+                        Entry = entries[0], // Use the already tracked entity
+                        Product = products[1], // Use the already tracked entity
                         Quantity = 5
                     },
                     new DetailedEntry
                     {
-                        Entry = context.Entries.AsNoTracking().First(e => e.Id == entries[1].Id),
-                        Product = context.Products.AsNoTracking().First(p => p.Id == products[2].Id),
+                        Entry = entries[1], // Use the already tracked entity
+                        Product = products[2], // Use the already tracked entity
                         Quantity = 7
                     }
                 };
                 context.DetailedEntries.AddRange(detailedEntries);
                 context.SaveChanges();
+
 
                 // Seed Detailed Entries
 

@@ -4,12 +4,12 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Index</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -40,9 +40,37 @@
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> |
+                <form method="post" asp-page-handler="Select">
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <button type="submit">Select</button>
+                </form>
             </td>
+
         </tr>
 }
     </tbody>
 </table>
+
+@if (Model.detailedEntry != null)
+{
+    <h2>Detailed Entry</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.detailedEntry.Id</td>
+                <td>@Model.detailedEntry.Product.Price</td>
+                <td>@Model.detailedEntry.Quantity</td>
+                <td>@Model.detailedEntry.Value</td>
+            </tr>
+        </tbody>
+    </table>
+}
