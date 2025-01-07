@@ -1,0 +1,52 @@
+﻿@page
+@model miniProiect2.Pages.Exits.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Exit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="SelectedEntry.Id" class="control-label"></label>
+                <select asp-for="SelectedEntry.Id" class="form-control" asp-items="ViewBag.EntryId"></select>
+            </div>
+            <button type="submit" asp-page-handler="SelectEntry" asp-route-id="SelectedEntry.Id">Select</button>
+            <div>
+            </div>
+            @if (Model.isSelected == true)
+            {
+                <div class="form-group">
+                    <label asp-for="Exit.Date" class="control-label"></label>
+                    <input asp-for="Exit.Date" class="form-control" />
+                    <span asp-validation-for="Exit.Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Exit.GestionId" class="control-label"></label>
+                    <select asp-for="Exit.GestionId" class ="form-control" asp-items="ViewBag.GestionId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DetailedExit.ProductId" class="control-label"></label>
+                    <select asp-for="DetailedExit.ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            }
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
