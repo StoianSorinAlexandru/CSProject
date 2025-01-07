@@ -36,7 +36,7 @@ namespace miniProiect2.Pages.DetailedExits
                 return NotFound();
             }
             DetailedExit = detailedexit;
-           ViewData["Id"] = new SelectList(_context.Exits, "Id", "Id");
+           ViewData["ExitId"] = new SelectList(_context.Exits, "Id", "Id");
            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
             return Page();
         }

@@ -16,6 +16,12 @@
             <input type="hidden" asp-for="DetailedExit.Id" />
             <div class="form-group">
                 
+                <label asp-for="DetailedExit.ExitId" class="control-label"></label>
+                <select asp-for="DetailedExit.ExitId" class="form-control" asp-items="ViewBag.ExitId"></select>
+                <span asp-validation-for="DetailedExit.ExitId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
                 <label asp-for="DetailedExit.ProductId" class="control-label"></label>
                 <select asp-for="DetailedExit.ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
                 <span asp-validation-for="DetailedExit.ProductId" class="text-danger"></span>

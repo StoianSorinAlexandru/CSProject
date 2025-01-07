@@ -101,15 +101,18 @@ namespace miniProiect2.Migrations
                 name: "DetailedExits",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExitId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DetailedExits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DetailedExits_Exits_Id",
-                        column: x => x.Id,
+                        name: "FK_DetailedExits_Exits_ExitId",
+                        column: x => x.ExitId,
                         principalTable: "Exits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -157,6 +160,11 @@ namespace miniProiect2.Migrations
                 name: "IX_DetailedEntries_ProductId",
                 table: "DetailedEntries",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetailedExits_ExitId",
+                table: "DetailedExits",
+                column: "ExitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetailedExits_ProductId",

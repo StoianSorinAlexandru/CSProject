@@ -12,7 +12,7 @@ using miniProiect2.Data;
 namespace miniProiect2.Migrations
 {
     [DbContext(typeof(miniProiect2Context))]
-    [Migration("20250106165441_Test")]
+    [Migration("20250107152150_Test")]
     partial class Test
     {
         /// <inheritdoc />
@@ -54,12 +54,23 @@ namespace miniProiect2.Migrations
             modelBuilder.Entity("miniProiect2.Models.DetailedExit", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExitId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ExitId");
 
                     b.HasIndex("ProductId");
 
@@ -198,7 +209,7 @@ namespace miniProiect2.Migrations
                 {
                     b.HasOne("miniProiect2.Models.Exit", "Exit")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ExitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -36,17 +37,20 @@ namespace miniProiect2.Pages.Exits
 
         public IActionResult OnGet()
         {
-            ViewData["GestionId"] = new SelectList(_context.Gestions, "Id", "Name");
+            if (TempData["SelectedEntry"] != null)
+            {
+                isSelected = true;
+                SelectedEntry = JsonConvert.DeserializeObject<Entry>((string)TempData["SelectedEntry"]);
+                detailedEntry = _context.DetailedEntries
+                    .Include(d => d.Product)
+                    .FirstOrDefault(m => m.EntryId == SelectedEntry.Id);
+            }
             var gestionsQuery = from g in _context.Gestions
-                                join e in (
-                                    from e in _context.Entries
-                                    join de in _context.DetailedEntries on e.Id equals de.EntryId
-                                    select e
-                                ) on g.Id equals e.GestionId
+                                where g.Id == SelectedEntry.GestionId
                                 select g;
 
             var productsQuery = from p in _context.Products
-                                join de in _context.DetailedEntries on p.Id equals de.ProductId
+                                where p.Id == detailedEntry.ProductId
                                 select p;
             var entriesQuery = from e in _context.Entries
                                select e;
@@ -54,11 +58,7 @@ namespace miniProiect2.Pages.Exits
             ViewData["ProductId"] = new SelectList(productsQuery, "Id", "Name");
             ViewData["GestionId"] = new SelectList(gestionsQuery, "Id", "Name");
             ViewData["EntryId"] = new SelectList(entriesQuery, "Id", "Id");
-            if (TempData["SelectedEntry"] != null)
-            {
-                isSelected = true;
-                SelectedEntry = JsonConvert.DeserializeObject<Entry>((string)TempData["SelectedEntry"]);
-            }
+
             return Page();
         }
 
@@ -92,6 +92,12 @@ namespace miniProiect2.Pages.Exits
             }
 
             _context.Exits.Add(Exit);
+            await _context.SaveChangesAsync();
+
+            DetailedExit.ExitId = Exit.Id;
+            DetailedExit.Exit = Exit;
+
+            _context.DetailedExits.Add(DetailedExit);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
