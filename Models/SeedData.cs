@@ -110,8 +110,8 @@ namespace miniProiect2.Data
 
                 // Seed Detailed Exits
                 context.DetailedExits.AddRange(
-                    new DetailedExit { Exit = exits[0], Product = products[0] },
-                    new DetailedExit { Exit = exits[1], Product = products[2] }
+                    new DetailedExit { Exit = exits[0], Product = products[0], Quantity = 10 },
+                    new DetailedExit { Exit = exits[1], Product = products[2], Quantity = 4 }
                 );
 
                 // Save changes again

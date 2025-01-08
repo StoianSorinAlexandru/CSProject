@@ -1,0 +1,93 @@
+﻿@page
+@model miniProiect2.Pages.Report.IndexModel
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<h1>Reports</h1>
+
+<form method="post">
+    <div>
+        <h2>Select Report Type</h2>
+        <label>
+            <input type="radio" name="ReportType" value="Intrari" checked> Lista Intrari
+        </label>
+        <label>
+            <input type="radio" name="ReportType" value="Iesiri"> Lista Iesiri
+        </label>
+    </div>
+
+    <div>
+        <h2>Filters</h2>
+        <div>
+            <label>Data Inceput:</label>
+            <input type="date" name="DateStart" value="@Model.DateStart.ToString("yyyy-MM-dd")" required />
+        </div>
+        <div>
+            <label>Data Sfarsit:</label>
+            <input type="date" name="DateEnd" value="@Model.DateEnd.ToString("yyyy-MM-dd")" required />
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="GestionFilter" value="Toate" checked onchange="toggleGestionDropdown()"> Toate Gestiunile
+            </label>
+            <label>
+                <input type="radio" name="GestionFilter" value="Una" onchange="toggleGestionDropdown()"> O Gestiune
+            </label>
+            <select id="GestionSelect" name="GestionId" style="display: none;">
+                <option value="">-- Select a Gestiune --</option>
+                @foreach (var gestion in Model.Gestions)
+                {
+                    <option value="@gestion.Id">@gestion.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <button type="submit" name="Action" value="Accepta">Accepta</button>
+        <button type="submit" name="Action" value="Listeaza">Listeaza</button>
+    </div>
+</form>
+
+@if (Model.ReportData != null)
+{
+    <h2>Report Results</h2>
+    <table>
+        <thead>
+            <tr>
+                @foreach (System.Data.DataColumn column in Model.ReportData.Columns)
+                {
+                    <th>@column.ColumnName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.ReportData.Rows)
+            {
+                <tr>
+                    @foreach (var item in row.ItemArray)
+                    {
+                        <td>@item</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section Scripts {
+    <script>
+        function toggleGestionDropdown() {
+            const gestionSelect = document.getElementById("GestionSelect");
+            const gestionFilter = document.querySelector('input[name="GestionFilter"]:checked').value;
+
+            if (gestionFilter === "Una") {
+                gestionSelect.style.display = "inline";
+            } else {
+                gestionSelect.style.display = "none";
+                gestionSelect.value = ""; // Clear the selection if hidden
+            }
+        }
+    </script>
+}

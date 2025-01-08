@@ -45,7 +45,7 @@ namespace miniProiect2.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("DetailedEntries");
+                    b.ToTable("DetailedEntry");
                 });
 
             modelBuilder.Entity("miniProiect2.Models.DetailedExit", b =>

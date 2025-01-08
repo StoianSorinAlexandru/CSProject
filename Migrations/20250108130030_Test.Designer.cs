@@ -12,7 +12,7 @@ using miniProiect2.Data;
 namespace miniProiect2.Migrations
 {
     [DbContext(typeof(miniProiect2Context))]
-    [Migration("20250107152150_Test")]
+    [Migration("20250108130030_Test")]
     partial class Test
     {
         /// <inheritdoc />
@@ -48,7 +48,7 @@ namespace miniProiect2.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("DetailedEntries");
+                    b.ToTable("DetailedEntry");
                 });
 
             modelBuilder.Entity("miniProiect2.Models.DetailedExit", b =>

@@ -125,7 +125,7 @@ namespace miniProiect2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DetailedEntries",
+                name: "DetailedEntry",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -136,15 +136,15 @@ namespace miniProiect2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DetailedEntries", x => x.Id);
+                    table.PrimaryKey("PK_DetailedEntry", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DetailedEntries_Entries_EntryId",
+                        name: "FK_DetailedEntry_Entries_EntryId",
                         column: x => x.EntryId,
                         principalTable: "Entries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DetailedEntries_Products_ProductId",
+                        name: "FK_DetailedEntry_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -152,13 +152,13 @@ namespace miniProiect2.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DetailedEntries_EntryId",
-                table: "DetailedEntries",
+                name: "IX_DetailedEntry_EntryId",
+                table: "DetailedEntry",
                 column: "EntryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DetailedEntries_ProductId",
-                table: "DetailedEntries",
+                name: "IX_DetailedEntry_ProductId",
+                table: "DetailedEntry",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -191,7 +191,7 @@ namespace miniProiect2.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DetailedEntries");
+                name: "DetailedEntry");
 
             migrationBuilder.DropTable(
                 name: "DetailedExits");
