@@ -178,11 +178,10 @@ namespace miniProiect2.Pages.ReportMisc
                 {
                     csvContent.Append(item?.ToString()?.Replace(",", ";") + ",");
                 }
-                csvContent.Length--; // Remove the trailing comma
+                csvContent.Length--;
                 csvContent.AppendLine();
             }
 
-            // Return the CSV file as a downloadable file
             var fileContent = System.Text.Encoding.UTF8.GetBytes(csvContent.ToString());
             var fileName = $"Report_{DateTime.Now:yyyyMMddHHmmss}.csv";
             return File(fileContent, "text/csv", fileName);
