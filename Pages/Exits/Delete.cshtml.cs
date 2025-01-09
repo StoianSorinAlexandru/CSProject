@@ -49,9 +49,21 @@ namespace miniProiect2.Pages.Exits
             }
 
             var exit = await _context.Exits.FindAsync(id);
+            var detailedExits = from de in _context.DetailedExits
+                where de.ExitId == Exit.Id
+                select de;
+
             if (exit != null)
             {
                 Exit = exit;
+
+                if (detailedExits.Any())
+                {
+                    foreach (var detailedExit in detailedExits)
+                    {
+                        _context.DetailedExits.Remove(detailedExit);
+                    }
+                }
                 _context.Exits.Remove(Exit);
                 await _context.SaveChangesAsync();
             }

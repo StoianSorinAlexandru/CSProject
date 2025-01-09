@@ -49,9 +49,21 @@ namespace miniProiect2.Pages.Entries
             }
 
             var entry = await _context.Entries.FindAsync(id);
+            var detailedExit = from de in _context.DetailedEntries
+                               where de.EntryId == Entry.Id
+                               select de;
             if (entry != null)
             {
                 Entry = entry;
+
+                if (detailedExit.Any())
+                {
+                    foreach (var de in detailedExit)
+                    {
+                        _context.DetailedEntries.Remove(de);
+                    }
+                }
+
                 _context.Entries.Remove(Entry);
                 await _context.SaveChangesAsync();
             }
