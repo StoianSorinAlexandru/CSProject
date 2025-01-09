@@ -17,7 +17,7 @@
                 <label asp-for="SelectedEntry.Id" class="control-label"></label>
                 <select asp-for="SelectedEntry.Id" class="form-control" asp-items="ViewBag.EntryId"></select>
             </div>
-            <button type="submit" asp-page-handler="SelectEntry" asp-route-id="SelectedEntry.Id">Select</button>
+            <button type="submit" asp-page-handler="SelectEntry">Select</button>
             <div>
             </div>
             @if (Model.isSelected == true)

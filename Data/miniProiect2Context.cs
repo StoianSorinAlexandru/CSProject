@@ -25,6 +25,6 @@ namespace miniProiect2.Data
         public DbSet<miniProiect2.Models.DetailedExit> DetailedExits { get; set; }
 
         public DbSet<miniProiect2.Models.DetailedEntry> DetailedEntry { get; set; }
-        //public DbSet<miniProiect2.Models.Report> Reports { get; set; }
+        public DbSet<miniProiect2.Models.Report> Reports { get; set; }
     }
 }

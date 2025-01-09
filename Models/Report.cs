@@ -4,6 +4,7 @@ namespace miniProiect2.Models
 {
     public class Report
     {
+        public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime Date { get; set; }

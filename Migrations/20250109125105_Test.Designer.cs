@@ -12,7 +12,7 @@ using miniProiect2.Data;
 namespace miniProiect2.Migrations
 {
     [DbContext(typeof(miniProiect2Context))]
-    [Migration("20250108130030_Test")]
+    [Migration("20250109125105_Test")]
     partial class Test
     {
         /// <inheritdoc />
@@ -184,6 +184,35 @@ namespace miniProiect2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("miniProiect2.Models.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Gestion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GestionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("miniProiect2.Models.DetailedEntry", b =>

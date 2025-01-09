@@ -1,5 +1,5 @@
 ﻿@page
-@model miniProiect2.Pages.Report.IndexModel
+@model miniProiect2.Pages.ReportMisc.IndexModel
 @{
     ViewData["Title"] = "Reports";
 }
@@ -41,19 +41,36 @@
                     <option value="@gestion.Id">@gestion.Name</option>
                 }
             </select>
-        </div>
+
+
+        </div> 
+     
     </div>
 
     <div>
         <button type="submit" name="Action" value="Accepta">Accepta</button>
         <button type="submit" name="Action" value="Listeaza">Listeaza</button>
     </div>
+
+    @if (Model.IsListSelected == true)
+    {
+        <div id="GroupMethod">
+            <label>
+                <input type="radio" name="GroupMethod" value="Pe Gestiune" checked onchange="toggleGroupMethod()"> Dupa Gestiune
+            </label>
+            <label>
+                <input type="radio" name="GroupMethod" value="Pe data" onchange="toggleGroupMethod()"> Dupa data
+            </label>
+            <button type="submit" name="Action" value="Finalizare Listare">Finalizare Listare</button>
+        </div>
+    }
 </form>
 
 @if (Model.ReportData != null)
 {
+    
     <h2>Report Results</h2>
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 @foreach (System.Data.DataColumn column in Model.ReportData.Columns)
@@ -90,4 +107,19 @@
             }
         }
     </script>
+    <script>
+        function toggleGroupMethod(){
+            const groupSelect = document.getElementById("GroupMethod")
+            const groupFilter = document.querySelector('input[name=GroupMethod]:checked').value;
+            
+            if(groupFilter == "Pe Gestiune"){
+
+            }
+            else{
+
+            }
+
+        }
+    </script>
 }
+
